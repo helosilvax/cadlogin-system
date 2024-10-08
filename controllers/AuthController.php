@@ -5,7 +5,7 @@ require_once 'models/user.php';
 class AuthController
 {
     // Função responsável processo de login 
-    public function login()
+    public function login(){
     {
         // Verifica se a requisição HTTP é do topo POST, ou seja, se o formulário foi enviado 
         if($_SERVER['REQUEST_METHOD'] == 'POST')
@@ -21,12 +21,28 @@ class AuthController
                 session_start();
                 // Armazena na sessão o ID do usuário que está logado e seu perfil
                 $_SESSION['usuario_id'] = $user ['id'];
-                $_SESSION['perfil'] = $user ['perfil'];
-                header('');
+                $_SESSION['perfil']     = $user ['perfil'];
+
+                header('Location: indey.php?action=dashbord');
+            }else{
+                echo "Email ou senha incorretos";
             }
+        }else{
+            include 'views/login.php';
+        }
+        }
+          // Função responsável por fazer o logout (encerrar a sessão do usuário)
+        public function logout(){
+            // Indicar a sessão para destrui-la
+            session_start();
+            // Destroi todas as informações da sessão
+            session_destroy();
+            // Redirenciou o usuário para a página inicical 
+            header('Location: index.php');
         }
     }
-}
+    }
+
 
 
 ?>
